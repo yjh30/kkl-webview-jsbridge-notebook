@@ -1,5 +1,5 @@
 # 业务代码的优化
-- **js bridge 事件交互的优化**
+- **js bridge 事件交互的优化**  
 优化点：js与客户端事件交互更简单
 
 ```javascript
@@ -12,7 +12,7 @@ this.$bridge.$on('viewOnPause', this.viewOnPauseListener)
 
 ```
 
-- **执行quitWebView时埋点方式的优化**
+- **执行quitWebView时埋点方式的优化**  
 优化点：
 1、移除所有项目中的代码行 Vue.prototype.$bus = new Vue()
 2、bridge.js模块代码更加独立，无任何第三方依赖
@@ -48,12 +48,25 @@ export default class extends EventEmitter {
 // from NavigationBar.vue
 // 使用removeListener替代removeAllListeners，避免代码逻辑丢失
 {
+  /* 原待优化代码
   mounted() {
     if (this.$bridge) {
       this.$bridge.removeAllListeners('androidBackKey')
       this.$bridge.on('androidBackKey', () => {
         this.slide(this.to)
       })
+    }
+  }
+  */
+  mounted() {
+    if (this.$bridge) {
+      this.$bridge.removeListener('androidBackKey', this.androidBackKeyListener)
+      this.$bridge.on('androidBackKey', this.androidBackKeyListener)
+    }
+  }，
+  methods: {
+    androidBackKeyListener() {
+      this.slide(this.to)
     }
   }
 }

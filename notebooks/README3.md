@@ -10,8 +10,8 @@
 - **了解 IOS UIViewController 的生命周期（下图摘自网络）**
 ![avatar](../asserts/activity_lifecircle.png)
 
-- **在 Activity中使用 WebView** 
-[了解更多](https://mp.weixin.qq.com/s/4XRB7nqTVftL5K2jAMGVVg)
+- **在 Activity中使用 WebView**  
+[了解更多](https://mp.weixin.qq.com/s/4XRB7nqTVftL5K2jAMGVVg)  
 [下面代码来自博客园](https://www.cnblogs.com/whoislcj/p/5980240.html)
 ```java
 public class MainActivity extends Activity {
@@ -38,32 +38,6 @@ public class MainActivity extends Activity {
                 mWebView.loadUrl("javascript:actionFromNativeWithParam(" + "'come from Native'" + ")");
             }
         });
-
-    }
-
-    @android.webkit.JavascriptInterface
-    public void actionFromJs() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(MainActivity.this, "js调用了Native函数", Toast.LENGTH_SHORT).show();
-                String text = logTextView.getText() + "\njs调用了Native函数";
-                logTextView.setText(text);
-            }
-        });
-    }
-
-    @android.webkit.JavascriptInterface
-    public void actionFromJsWithParam(final String str) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(MainActivity.this, "js调用了Native函数传递参数：" + str, Toast.LENGTH_SHORT).show();
-                String text = logTextView.getText() +  "\njs调用了Native函数传递参数：" + str;
-                logTextView.setText(text);
-            }
-        });
-
     }
 }
 ```
