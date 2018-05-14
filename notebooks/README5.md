@@ -29,7 +29,37 @@
 }
 ```
 
-- 大数据埋点 处理WebView onPause 与 onDestroy生命周期的关系
+- **英语听口事件交互，记录音频播放状态**
+```javascript
+const eventNames = ['english_loadingData', 'english_startPlay', 'english_playPause', 'english_playError', 'english_stopPlay']
+
+// vue component
+{
+  data() {
+    return {
+      audioStatus: -1 // 1 加载中 2 播放中 3 暂停 4 播放错误 5 播放完毕
+    }
+  },
+  registerEnglishEvent() {
+    const fn = (eventName, callback) => {
+      this.$bridge.call('registerEvent', { eventName });
+      this.$bridge.on(eventName, res => {
+        callback && callback(res);
+      });
+    }
+    eventNames.forEach((eventName, i) => {
+      fn(eventName, () => {
+        this.audioStatus = i + 1
+        if (i === 3) {
+          Toast({ message: '播放失败', iconClass: 'error' })
+        }
+      })
+    })
+  }
+}
+```
+
+- **大数据埋点 处理WebView onPause 与 onDestroy生命周期的关系**
 ```javascript
 // from bridge.js
 export default class extends EventEmitter {
