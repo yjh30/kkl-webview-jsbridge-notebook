@@ -14,8 +14,8 @@ this.$bridge.$on('viewOnPause', this.viewOnPauseListener)
 
 - **执行quitWebView时埋点方式的优化**  
 优化点：
-1、移除所有项目中的代码行 Vue.prototype.$bus = new Vue()
-2、bridge.js模块代码更加独立，无任何第三方依赖
+1、移除所有项目中的代码行 Vue.prototype.$bus = new Vue()  
+2、bridge.js模块代码更加独立，无任何第三方依赖  
 3、getDataBury.js对quitWebView的处理更加清晰
 
 ```javascript

@@ -34,7 +34,7 @@
 // from bridge.js
 export default class extends EventEmitter {
   call() {
-    // 由于我们对客户端viewOnPause事件及quitWebView行为都做了埋点请求，当quitWebView行为发生时，我们需要移除客户端注册的事件监听，避免二次发送埋点请求
+    // 由于我们对客户端viewOnPause事件及quitWebView行为都做了埋点请求   //当quitWebView行为发生时，我们需要移除客户端注册的事件监听，避免二次发送埋点请求
     if(method === 'quitWebView') {
       this.call('unRegisterEvent', { eventName: 'viewOnPause' })
     }
