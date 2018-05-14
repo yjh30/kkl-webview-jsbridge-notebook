@@ -2,9 +2,9 @@
 - **h5与客户端新WebViewActivity交互图**
 ![avatar](../asserts/interaction.png)
 
-- **js bridge 模块代码维护目录**
-h5 spa项目：koa-kkl-h5/src/common/utils/bridge/index.js
-h5 活动页：kkl-js-bridge/src/bridge/index.js
+- **js bridge 模块代码维护目录**  
+h5 spa项目：koa-kkl-h5/src/common/utils/bridge/index.js  
+h5 活动页：kkl-js-bridge/src/bridge/index.js  
 cdn地址：[http://static.kaike.la/fe/libs/jsBridge.js](http://static.kaike.la/fe/libs/jsBridge.js)
 
 - **普通方法的使用**
