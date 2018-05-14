@@ -8,7 +8,7 @@
 ![avatar](../asserts/activity_lifecircle.png)
 
 - **了解 IOS UIViewController 的生命周期（下图摘自网络）**
-![avatar](../asserts/activity_lifecircle.png)
+![avatar](../asserts/ios_lifecircle.jpg)
 
 - **在 Activity中使用 WebView**  
 [了解更多](https://mp.weixin.qq.com/s/4XRB7nqTVftL5K2jAMGVVg)  
