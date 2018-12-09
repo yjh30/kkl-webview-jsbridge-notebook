@@ -5,12 +5,10 @@
 // from getDataBury.js
 {
   mounted() {
+    // 延时针对uiWebview，native端升级为WkWebview后可移除
     setTimeout(() => {
-      this.$bridge.call('registerEvent', { eventName: 'viewOnResume' })
-      this.$bridge.call('registerEvent', { eventName: 'viewOnPause' })
-
-      this.$bridge.on('viewOnPause', this.viewOnPauseForBury)
-      this.$bridge.on('viewOnResume', this.viewOnResumeForBury)
+      this.$bridge.$on('viewOnPause', this.viewOnPauseForBury)
+      this.$bridge.$on('viewOnResume', this.viewOnResumeForBury)
     }, 1000)
   },
   methods: {
@@ -42,8 +40,7 @@ const eventNames = ['english_loadingData', 'english_startPlay', 'english_playPau
   },
   registerEnglishEvent() {
     const fn = (eventName, callback) => {
-      this.$bridge.call('registerEvent', { eventName });
-      this.$bridge.on(eventName, res => {
+      this.$bridge.$on(eventName, res => {
         callback && callback(res);
       });
     }
@@ -64,7 +61,7 @@ const eventNames = ['english_loadingData', 'english_startPlay', 'english_playPau
 // from bridge.js
 export default class extends EventEmitter {
   call() {
-    // 由于我们对客户端viewOnPause事件及quitWebView行为都做了埋点请求   //当quitWebView行为发生时，我们需要移除客户端注册的事件监听，避免二次发送埋点请求
+    // 由于我们对客户端viewOnPause事件及quitWebView行为都做了埋点请求   // 当quitWebView行为发生时，我们需要移除客户端注册的事件监听，避免二次发送埋点请求
     if(method === 'quitWebView') {
       this.call('unRegisterEvent', { eventName: 'viewOnPause' })
     }

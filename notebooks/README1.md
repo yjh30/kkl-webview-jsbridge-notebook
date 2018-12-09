@@ -30,41 +30,38 @@ window.KKLBridge.call(methodName, params)
 ```javascript
 {
   mounted() {
-    // 监听客户端事件，同时在客户端事件监听中发布通过on订阅的事件
-    this.$bridge.call('registerEvent', { eventName: 'viewOnPause' })
-
-    // 多次调用并无影响，但不建议这样做
-    // this.$bridge.call('registerEvent', { eventName: 'viewOnPause' })
-    // this.$bridge.call('registerEvent', { eventName: 'viewOnPause' })
-
-    // js 监听viewOnPause事件
-    this.$bridge.on('viewOnPause', this.viewOnPauseListener)
+    // 监听native端viewOnPauses事件
+    this.$bridge.$on('viewOnPause', this.viewOnPauseListener)
   },
 
-  // 页面离开之前应该 通知客户端移除发布过的事件，且移除h5事件监听器
+  // 页面离开之前应该
   beforeRouteLeave(to, from, next) {
-    // 移除客户端监听（注意是否对其他路由页面产生影响）
-    // this.$bridge.call('unRegisterEvent', { eventName: 'viewOnPause' })
-
-    // 移除js对viewOnPause事件的监听
-    this.$bridge.removeListener('viewOnPause', this.viewOnPauseListener)
+    // 移除针对native端viewOnPause事件监听器
+    this.$bridge.$off('viewOnPause', this.viewOnPauseListener)
   }
 }
 ```
 
 - **Android返回键对路由的处理**
 ```javascript
+// 点击安卓物理返回键native端执行JavaScript_HandleNativeBackAction全局函数
 window.JavaScript_HandleNativeBackAction = () => {
   this.$bridge.emit('androidBackKey')
 }
 
 // from NavigationBar.vue
+// NavigationBar.vue 设计思路：点击左上角返回按钮，点击安卓物理返回键执行this.to回调函数
 {
   mounted() {
-    this.$bridge.removeAllListeners('androidBackKey')
-    this.$bridge.on('androidBackKey', () => {
+    if (this.$bridge) {
+      this.$bridge.removeListener('androidBackKey', this.androidBackKeyListener)
+      this.$bridge.on('androidBackKey', this.androidBackKeyListener)
+    }
+  }，
+  methods: {
+    androidBackKeyListener() {
       this.slide(this.to)
-    })
+    }
   }
 }
 ```
