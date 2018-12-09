@@ -2,6 +2,7 @@
   "name": "kkl-webview-jsbridge-notebook",
   "version": "1.0.0",
   "description": "开课啦原生WebView与js桥接记事本",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:yjh30/kkl-webview-jsbridge-notebook.git"
